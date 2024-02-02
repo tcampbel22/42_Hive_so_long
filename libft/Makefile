@@ -55,16 +55,14 @@ OBJS = $(SRC_FLS:.c=.o)
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
-	@mkdir -p $(SRC_DIR)/$(OBJ_DIR)
-	@mv $(OBJS) $(SRC_DIR)/$(OBJ_DIR)
 
 	@echo "${YELLOW}|---------------->${GREEN}libft Compiled Successfully${YELLOW}<------------------|${END}"
 
 clean:
-	$(RM) $(SRC_DIR)/$(OBJ_DIR)
+	$(RM) $(SRC_DIR)/$(OBJS)
 	@echo "${YELLOW}|------------------------>${RED}libft Cleaned${YELLOW}<------------------------|${END}"
 
-fclean:
+fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all

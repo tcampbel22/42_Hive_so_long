@@ -6,100 +6,100 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/01 17:36:36 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:12:42 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "lib/MLX42/include/MLX42/MLX42.h"
-#define WIDTH 256
-#define HEIGHT 256
+#include "so_long.h"
 
-/*int	main(void)
+int	shape_check(char **map)
 {
-	void	*mlx_ptr;
+	int	i;
+	int	len;
 
-	mlx_ptr = mlx_init(WIDTH, HEIGHT, "so_long", true);
-	if (!mlx_ptr)
-		exit(1);
-//	mlx_destroy_display(mlx_ptr);
-//	free(mlx_ptr);
-}*/
-
-static mlx_image_t* image;
-
-// -----------------------------------------------------------------------------
-
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
+	i = 0;
+	len = ft_strlen(map[0]) - 1;
+	ft_printf("\nWidth = %i\n", len);
+	while (map[i])
+		i++;
+	ft_printf("Height = %i\n", i);
+	if (len == i)
+		return (0);
+	return (1);
 }
 
-void ft_randomize(void* param)
+int	map_check()
 {
-	(void)param;
-	for (uint32_t i = 0; i < image->width; ++i)
+	int		i;
+	t_map	layout;
+	if (!&shape_check)
+		return (1);
+	if (layout.n_player != 1 || layout.collect < 1 || layout.exit != 1)
+		return (1);
+	i = 0;
+	return (0);
+}
+
+char	**free_str_1(char **result)
+{
+	size_t	i;
+
+	i = 0;
+	while (result[i])
 	{
-		for (uint32_t y = 0; y < image->height; ++y)
+		free(result[i]);
+		i++;
+	}
+	free(result);
+	return (0);
+}
+
+void	ft_perror(char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(1);
+}
+int	main(int ac, char **av)
+{
+	int		fd;
+	char	*line;
+	char	*map_str;
+	char	*map_file;
+	char	**map;
+	int		i;
+
+	map_file = av[1];
+	line = NULL;
+	map_str = NULL;
+	map = NULL;
+	i = 0;
+	fd = open(map_file, O_RDONLY);
+	if (fd < 0)
+		ft_perror("Failed to open file or file does exist");
+	if (ac != 2)
+		return (0);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+		if (!map_str)
 		{
-			uint32_t color = ft_pixel(
-				rand() % 0xFF, // R
-				rand() % 0xFF, // G
-				rand() % 0xFF, // B
-				rand() % 0xFF  // A
-			);
-			mlx_put_pixel(image, i, y, color);
+			map_str = ft_strdup("");
+			if (!map_str)
+			{
+				ft_free(&map_str);
+				return (0);
+			}
 		}
+		else
+			map_str = ft_strjoin_gnl(line, map_str);
+
 	}
+	map = ft_split(map_str, '\n');
+	if (!map)
+		ft_free(map);
+	free(map_str);
+	free_str_1(map);
 }
 
-void ft_hook(void* param)
-{
-	mlx_t* mlx = param;
-
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		image->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		image->instances[0].x += 5;
-}
-
-// -----------------------------------------------------------------------------
-
-int32_t main(void)
-{
-	mlx_t* mlx;
-
-	// Gotta error check this stuff
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (!(image = mlx_new_image(mlx, 128, 128)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-
-	mlx_loop_hook(mlx, ft_randomize, mlx);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
-}

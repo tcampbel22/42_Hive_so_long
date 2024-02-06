@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 10:05:00 by tcampbel          #+#    #+#             */
-/*   Updated: 2023/11/15 18:13:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:11:32 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static size_t	count_str(const char *s, char c)
 	return (count);
 }
 
-static char	**free_str(char **result)
+char	**free_str(char **result)
 {
 	size_t	i;
 

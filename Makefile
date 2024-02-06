@@ -14,9 +14,9 @@ OBJ_DIR		= objects
 MLX_DIR		= ./lib/MLX42
 
 #---------------------------------MLX-----------------------------------------#
-MLX_HEAD	= -I $(MLX_DIR)/include/MLX42/
+MLX_HEAD	= -I ./includes -I $(MLX_DIR)/include/MLX42/
 MLX_A		= $(MLX_DIR)/build/libmlx42.a -ldl -pthread -lm 
-MLX_LIBS	= -L$(MLX_DIR)/build -lmlx42 -L"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw #-framework Cocoa -framework OpenGL -framework IOKit
+MLX_LIBS	= -L$(MLX_DIR)/build -lmlx42 -L"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
 #---------------------------------Source Files--------------------------------#
 SRC_FLS = 	$(SRC_DIR)/so_long.c
@@ -31,23 +31,26 @@ PURPLE		= \033[1;35m
 END		= \033[0m
 
 #---------------------------------Rules---------------------------------------#
-all: libmlx $(NAME)
+all: libmlx $(LIBFTNAME) $(NAME)
 
 libmlx:
-	@if [ -d $(MLX_DIR)/build ]; then echo "make: Nothing to be done for \`all'."; break; else cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4; fi
+	@if [ ! -d $(MLX_DIR)/build ]; then\
+		cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4;\
+	fi
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o:  $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(MLX_HEAD) -c $< -o $@
 
-$(NAME): $(OBJS)
+$(LIBFTNAME): 
+	@make -C $(LIBFT_DIR)
 
-	@echo "${YELLOW}|------------------------>${PURPLE}Compiling libft${YELLOW}<----------------------|${END}"
+$(NAME): $(OBJS) 
+
 	@echo "${YELLOW}|------------------------>${PURPLE}Compiling so_long${YELLOW}<--------------------|${END}"
 
-	@make -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(MLX_HEAD) $(OBJS) -o $@ $(MLX_A) $(MLX_LIBS) $(LIBFT_DIR)/$(LIBFTNAME) 
 
 	@echo "${YELLOW}|---------------->${GREEN}so_long Compiled Successfully${YELLOW}<----------------|${END}"

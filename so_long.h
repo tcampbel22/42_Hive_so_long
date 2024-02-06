@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 11:23:23 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/05 14:06:06 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/02/05 12:42:29 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/02/06 17:52:47 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include "lib/MLX42/include/MLX42/MLX42.h"
+# include "libft/includes/libft.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+typedef struct s_player
 {
-	int	i;
+	int	x;
+	int	y;
+} player;
 
-	i = 0;
-	if (!s || !f)
-		return ;
-	while (s[i])
-	{
-		(*f)(i, &s[i]);
-		i++;
-	}
-}
+typedef struct s_map
+{
+	player	player_pos;
+	int		n_player;
+	int		exit;
+	int		collect;
+	int		space;
+	int		width;
+	int		height;
+} t_map;
+
+#endif

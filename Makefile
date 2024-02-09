@@ -1,34 +1,46 @@
 #---------------------------------Archive-------------------------------------#
-NAME = so_long
-LIBFTNAME = libft.a
+NAME			= so_long
+LIBFTNAME		= libft.a
 
 #---------------------------------Flags---------------------------------------#
-CC = @cc
-CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast
-RM = @rm -rf
+
+CC 				= @cc
+CFLAGS			= -Wall -Wextra -Werror -Wunreachable-code -Ofast
+RM				= @rm -rf
 
 #---------------------------------Directories---------------------------------#
-SRC_DIR 	= .
-LIBFT_DIR 	= ./libft
-OBJ_DIR		= objects
-MLX_DIR		= ./lib/MLX42
+
+SRC_DIR 		= .
+LIBFT_DIR 		= ./libft
+OBJ_DIR			= objects
+MLX_DIR			= ./lib/MLX42
 
 #---------------------------------MLX-----------------------------------------#
-MLX_HEAD	= -I ./includes -I $(MLX_DIR)/include/MLX42/
-MLX_A		= $(MLX_DIR)/build/libmlx42.a -ldl -pthread -lm 
-MLX_LIBS	= -L$(MLX_DIR)/build -lmlx42 -L"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+
+MLX_HEAD		= -I ./includes -I $(MLX_DIR)/include/MLX42/
+MLX_A			= $(MLX_DIR)/build/libmlx42.a
+
+ifeq ($(shell uname), Darwin)
+	MLX_LIBS	= -L$(MLX_DIR)/build -lmlx42 -L"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+else
+	MLX_LIBS	= -L$(MLX_DIR)/build -lmlx42 -L"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -ldl -pthread -lm
+endif
 
 #---------------------------------Source Files--------------------------------#
-SRC_FLS = 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c
-OBJS 	= $(patsubst $(SRC_DIR/)%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))
+
+SRC_FLS 		= 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c
+
+#---------------------------------Object Files--------------------------------#
+
+OBJS 			= $(patsubst $(SRC_DIR/)%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))
 
 #---------------------------------Colours-------------------------------------#
-RED		= \033[1;91m
-YELLOW		= \033[1;33m
-GREEN		= \033[1;32m
-CYAN		= \033[1;36m
-PURPLE		= \033[1;35m
-END		= \033[0m
+RED				= \033[1;91m
+YELLOW			= \033[1;33m
+GREEN			= \033[1;32m
+CYAN			= \033[1;36m
+PURPLE			= \033[1;35m
+END				= \033[0m
 
 #---------------------------------Rules---------------------------------------#
 all: libmlx $(LIBFTNAME) $(NAME)

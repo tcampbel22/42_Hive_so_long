@@ -19,7 +19,7 @@ MLX_A		= $(MLX_DIR)/build/libmlx42.a -ldl -pthread -lm
 MLX_LIBS	= -L$(MLX_DIR)/build -lmlx42 -L"/Users/$(USER)/.brew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
 #---------------------------------Source Files--------------------------------#
-SRC_FLS = 	$(SRC_DIR)/so_long.c
+SRC_FLS = 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c
 OBJS 	= $(patsubst $(SRC_DIR/)%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))
 
 #---------------------------------Colours-------------------------------------#
@@ -42,7 +42,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o:  $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(MLX_HEAD) -c $< -o $@
+	$(CC) -g $(CFLAGS) $(MLX_HEAD) -c $< -o $@
 
 $(LIBFTNAME): 
 	@make -C $(LIBFT_DIR)

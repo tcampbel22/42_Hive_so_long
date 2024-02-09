@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 11:51:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2023/12/21 11:54:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:59:07 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 30
 # endif
 
 # include <stdlib.h>
@@ -22,7 +22,7 @@
 # include "libft.h"
 
 char	*get_next_line(int fd);
-char	*ft_free(char **str);
+//char	*ft_free(char **str);
 char	*read_line(int fd, char *storage);
 char	*find_end(char *storage);
 char	*find_line(char *storage);

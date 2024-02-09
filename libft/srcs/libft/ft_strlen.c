@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:04:57 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/06 16:43:27 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:45:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 
 	i = 0;
 	if (!s)
-		return (0);
+		return (i);
 	while (s[i])
 		i++;
 	return (i);

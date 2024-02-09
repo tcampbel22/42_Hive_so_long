@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_free_two.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 14:15:09 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/09 14:28:02 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/02/06 14:10:08 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/02/07 17:53:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *str1, char const *str2)
+char	**ft_free_two(char **str)
 {
 	size_t	i;
-	size_t	j;
-	char	*str3;
 
 	i = 0;
-	j = 0;
-	str3 = (char *)malloc((ft_strlen(str1) + ft_strlen(str2)) + 1);
-	if (!str3)
-		return (NULL);
-	while (str1[i])
+	while (str[i])
 	{
-		str3[i] = str1[i];
+		free(str[i]);
+		str[i] = NULL;
 		i++;
 	}
-	while (str2[j])
-	{
-		str3[i] = str2[j];
-		j++;
-		i++;
-	}
-	str3[i] = '\0';
-	return (str3);
+	free(str);
+	str = NULL;
+	return (NULL);
 }

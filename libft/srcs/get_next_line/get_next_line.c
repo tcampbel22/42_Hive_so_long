@@ -6,21 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:47:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/06 14:10:26 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:22:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_free(char **str)
-{
-	if (*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
-	return (NULL);
-}
 
 char	*find_line(char *storage)
 {

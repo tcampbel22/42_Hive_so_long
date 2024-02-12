@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                             :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:39:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/09 18:11:47 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:08:42 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ char	*append_line(char *buffer, char *map_str)
 void	line_check(char *map_str)
 {
 	if (map_str[0] == '\n')
-			ft_perror("Empty line at start of map");
+		ft_perror("Empty line at start of map");
 	else if (map_str[ft_strlen(map_str) - 2] == '\n')
-			ft_perror("Empty line at end of map");
+		ft_perror("Empty line at end of map");
 	else if (ft_strnstr(map_str, "\n\n", ft_strlen(map_str)))
-			ft_perror("Empty line in map");
+		ft_perror("Empty line in map");
 }
-
-
 
 void	read_map(char *map_file, t_map *layout)
 {
@@ -52,13 +50,18 @@ void	read_map(char *map_file, t_map *layout)
 			break ;
 		buffer[bytes_read] = '\0';
 		if (!map_str)
+		{
+			if (!buffer[0])
+				ft_perror("Map is empty");
 			map_str = ft_strdup(buffer);
+		}
 		else if (map_str || bytes_read)
 			map_str = append_line(buffer, map_str);
 		if (!map_str)
 		{
 			ft_free(&map_str);
-			return ;
+			close(fd);
+			ft_perror("Malloc Failure");;
 		}
 	}
 	line_check(map_str);
@@ -66,7 +69,6 @@ void	read_map(char *map_file, t_map *layout)
 	ft_free(&map_str);
 	close(fd);
 }
-
 
 void	parse_map(char *map_file)
 {
@@ -76,11 +78,11 @@ void	parse_map(char *map_file)
 	i = 0;
 	layout = malloc(sizeof(t_map));
 	read_map(map_file, layout);
-	while (layout->map[i])
+/*	while (layout->map[i])
 	{
 		ft_printf("%s\n", layout->map[i]);
 		i++;
-	}
+	}*/
 	map_check(layout);
 	ft_free_two(layout->map);
 	free(layout);

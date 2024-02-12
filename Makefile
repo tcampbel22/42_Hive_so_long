@@ -28,7 +28,7 @@ endif
 
 #---------------------------------Source Files--------------------------------#
 
-SRC_FLS 		= 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c
+SRC_FLS 		= 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c $(SRC_DIR)/valid_path.c\
 
 #---------------------------------Object Files--------------------------------#
 

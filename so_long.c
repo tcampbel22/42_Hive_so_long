@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/09 18:43:47 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:25:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,28 @@ void	shape_check(t_map *layout)
 	layout->height = x;
 }
 
-int	map_check(t_map *layout)
+void	map_check(t_map *layout)
 {
+	init_layout(layout);
 	shape_check(layout);
 	row_check(layout);
 	column_check(layout);
 	icon_check(layout);
-	if (layout->n_player != 1 || layout->collect < 0 || layout->exit != 1)
-		ft_perror("Invalid icon amount");
-	return (0);
+	valid_path(layout);
 }
-/*
+
 void	init_layout(t_map *layout)
 {
-//	ft_printf("Check1");
+
+	layout->pos_x = 0;
+	layout->pos_y = 0;
 	layout->n_player = 0;
 	layout->exit = 0;
 	layout->collect = 0;
 	layout->space = 0;
 	layout->width = 0;
 	layout->height = 0;
-	layout->map = NULL;
-}*/
+}
 
 void	ft_perror(char *str)
 {
@@ -61,13 +61,24 @@ void	ft_perror(char *str)
 	exit(1);
 }
 
+void	name_check(char *map_file)
+{
+	char	*suffix;
+
+	suffix = ft_strnstr(map_file, ".ber", ft_strlen(map_file));
+	if (ft_strncmp(suffix, ".ber", ft_strlen(suffix)) != 0)
+		ft_perror("Invalid file type");
+}
+
 int	main(int ac, char **av)
 {
 	char	*map_file;
-
 	if (ac != 2)
 		ft_perror("Invalid arg amount");
+	if (ft_strlen(av[1]) < 5)
+		ft_perror("Invalid file name");
 	map_file = av[1];
+	name_check(map_file);
 	parse_map(map_file);
 	exit(1);
 }

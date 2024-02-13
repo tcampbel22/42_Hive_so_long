@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:39:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/12 16:08:42 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:20:10 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ void	read_map(char *map_file, t_map *layout)
 	close(fd);
 }
 
-void	parse_map(char *map_file)
+void	parse_map(char *map_file, t_map *layout)
 {
-	t_map	*layout;
 	int		i;
 
 	i = 0;

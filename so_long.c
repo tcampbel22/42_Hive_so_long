@@ -6,53 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/12 15:25:12 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:33:06 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	shape_check(t_map *layout)
-{
-	int	x;
-	int	y;
-
-	x = 1;
-	layout->width = ft_strlen(layout->map[0]);
-	while (layout->map[x])
-	{
-		y = 0;
-		while (layout->map[x][y])
-			y++;
-		if (y != layout->width)
-			ft_perror("Invalid map shape");
-		x++;
-	}
-	layout->height = x;
-}
-
-void	map_check(t_map *layout)
-{
-	init_layout(layout);
-	shape_check(layout);
-	row_check(layout);
-	column_check(layout);
-	icon_check(layout);
-	valid_path(layout);
-}
-
-void	init_layout(t_map *layout)
-{
-
-	layout->pos_x = 0;
-	layout->pos_y = 0;
-	layout->n_player = 0;
-	layout->exit = 0;
-	layout->collect = 0;
-	layout->space = 0;
-	layout->width = 0;
-	layout->height = 0;
-}
 
 void	ft_perror(char *str)
 {
@@ -64,7 +22,9 @@ void	ft_perror(char *str)
 void	name_check(char *map_file)
 {
 	char	*suffix;
-
+	
+	if (ft_strlen(map_file) < 5)
+		ft_perror("Invalid file name");
 	suffix = ft_strnstr(map_file, ".ber", ft_strlen(map_file));
 	if (ft_strncmp(suffix, ".ber", ft_strlen(suffix)) != 0)
 		ft_perror("Invalid file type");
@@ -72,14 +32,46 @@ void	name_check(char *map_file)
 
 int	main(int ac, char **av)
 {
-	char	*map_file;
+	char			*map_file;
+	t_map			*layout;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	mlx_texture_t	*grass;
+
 	if (ac != 2)
 		ft_perror("Invalid arg amount");
-	if (ft_strlen(av[1]) < 5)
-		ft_perror("Invalid file name");
+	layout = NULL;
 	map_file = av[1];
 	name_check(map_file);
-	parse_map(map_file);
+	parse_map(map_file, layout);
+	mlx_set_setting(MLX_STRETCH_IMAGE, false);
+	mlx = mlx_init(WIDTH, HEIGHT, "so_long", true);
+	if (!mlx)
+		ft_perror("MLX Failure");
+	grass = mlx_load_png("./assets/grass.png");
+	img = mlx_texture_to_image(mlx, grass);
+	if (!img)
+		ft_perror("Image generation failed");
+/*	int32_t x = 0;
+	int32_t y = 0;
+	while (layout->map[x][y])
+	{
+		y = 0;
+		while (layout->map[x][y])
+		{
+			if (layout->map[x][y] == WALL)
+				mlx_image_to_window(mlx, img, x, y);
+			y++;
+		}
+		x++;
+	}*/
+	mlx_image_to_window(mlx, img, 1, 0);
+	mlx_set_window_pos(mlx, 1000, 50);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+//	free(mlx);
+//	free(img);
+//	free(grass);
 	exit(1);
 }
 

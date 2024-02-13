@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:42:29 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/12 15:26:24 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:41:31 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "libft/includes/libft.h"
 
 # define WALL '1'
+# define WIDTH 1024
+# define HEIGHT 1024
 
 typedef struct s_map
 {
@@ -35,9 +37,10 @@ typedef struct s_map
 	char	**map;
 } t_map;
 
+
 void	ft_perror(char *str);
 void	init_layout(t_map *layout);
-void	parse_map(char *map_file);
+void	parse_map(char *map_file, t_map *layout);
 void	map_check(t_map *layout);
 void	shape_check(t_map *layout);
 void	row_check(t_map *layout);

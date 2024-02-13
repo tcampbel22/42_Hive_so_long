@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:32:01 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/12 16:04:43 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:40:05 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	valid_path(t_map *layout)
 
 	dup_map = NULL;
 	dup_map = copy_map(dup_map, layout);
-	int	i = 0;
 	ft_floodfill(dup_map, layout, layout->pos_x, layout->pos_y);
 	ft_free_two(dup_map);
 	if (layout->collect != 0 || layout->exit != 0)

@@ -12,21 +12,21 @@
 
 #include "so_long.h"
 
-char	**copy_map(char **dup_map, t_map *layout)
+char	**copy_map(char **dup_map, t_map *map_data)
 {
 	int		i;
 
 	i = 0;
-	dup_map = ft_calloc(layout->height + 1, sizeof (char *));
+	dup_map = ft_calloc(map_data->height + 1, sizeof (char *));
 	if (!dup_map)
 	{
-		ft_free_two(layout->map);
+		ft_free_two(map_data->map);
 		ft_perror("Malloc Failure");
 	}
 	i = 0;
-	while (layout->map[i])
+	while (map_data->map[i])
 	{
-		dup_map[i] = ft_strdup(layout->map[i]);
+		dup_map[i] = ft_strdup(map_data->map[i]);
 		if (!dup_map[i])
 		{
 			ft_free_two(dup_map);
@@ -37,29 +37,29 @@ char	**copy_map(char **dup_map, t_map *layout)
 	return (dup_map);
 }
 
-void	ft_floodfill(char **map, t_map *layout, int pos_x, int pos_y)
+void	ft_floodfill(char **map, t_map *map_data, int pos_x, int pos_y)
 {
 	if (map[pos_x][pos_y] == WALL || map[pos_x][pos_y] == 2)
 		return ;
 	if (map[pos_x][pos_y] == 'C')
-		layout->collect--;
+		map_data->collect--;
 	if (map[pos_x][pos_y] == 'E')
-		layout->exit--;
+		map_data->exit--;
 	map[pos_x][pos_y] = 2;
-	ft_floodfill(map, layout, pos_x, pos_y + 1);
-	ft_floodfill(map, layout, pos_x, pos_y - 1);
-	ft_floodfill(map, layout, pos_x + 1, pos_y);
-	ft_floodfill(map, layout, pos_x - 1, pos_y);
+	ft_floodfill(map, map_data, pos_x, pos_y + 1);
+	ft_floodfill(map, map_data, pos_x, pos_y - 1);
+	ft_floodfill(map, map_data, pos_x + 1, pos_y);
+	ft_floodfill(map, map_data, pos_x - 1, pos_y);
 }
 
-void	valid_path(t_map *layout)
+void	valid_path(t_map *map_data)
 {
 	char **dup_map;
 
 	dup_map = NULL;
-	dup_map = copy_map(dup_map, layout);
-	ft_floodfill(dup_map, layout, layout->pos_x, layout->pos_y);
+	dup_map = copy_map(dup_map, map_data);
+	ft_floodfill(dup_map, map_data, map_data->pos_x, map_data->pos_y);
 	ft_free_two(dup_map);
-	if (layout->collect != 0 || layout->exit != 0)
+	if (map_data->collect != 0 || map_data->exit != 0)
 		ft_perror("No valid path");
 }

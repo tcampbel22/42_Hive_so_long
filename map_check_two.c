@@ -12,43 +12,49 @@
 
 #include "so_long.h"
 
-void	shape_check(t_map *layout)
+void	shape_check(t_map *map_data)
 {
 	int	x;
 	int	y;
 
 	x = 1;
-	layout->width = ft_strlen(layout->map[0]);
-	while (layout->map[x])
+	map_data->width = ft_strlen(map_data->map[0]);
+	while (map_data->map[x])
 	{
 		y = 0;
-		while (layout->map[x][y])
+		while (map_data->map[x][y])
 			y++;
-		if (y != layout->width)
+		if (y != map_data->width)
 			ft_perror("Invalid map shape");
 		x++;
 	}
-	layout->height = x;
+	map_data->height = x;
 }
 
-void	map_check(t_map *layout)
+void	map_check(t_map *map_data)
 {
-	init_layout(layout);
-	shape_check(layout);
-	row_check(layout);
-	column_check(layout);
-	icon_check(layout);
-	valid_path(layout);
+	shape_check(map_data);
+	row_check(map_data);
+	column_check(map_data);
+	icon_check(map_data);
+	valid_path(map_data);
 }
 
-void	init_layout(t_map *layout)
+t_map	*init_layout(char **map)
 {
+	t_map	*layout;
+
+	layout = malloc(sizeof(t_map));
+	if (!layout)
+		ft_perror("Malloc Failure");
+	layout->map = map;
 	layout->pos_x = 0;
 	layout->pos_y = 0;
 	layout->n_player = 0;
 	layout->exit = 0;
 	layout->collect = 0;
-	layout->space = 0;
+	layout->steps = 0;
 	layout->width = 0;
 	layout->height = 0;
+	return (layout);
 }

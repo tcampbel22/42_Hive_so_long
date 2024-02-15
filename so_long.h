@@ -21,8 +21,21 @@
 # include "libft/includes/libft.h"
 
 # define WALL '1'
-# define WIDTH 1024
-# define HEIGHT 1024
+# define COLLECT 'C'
+# define EXIT 'E'
+# define PLAYER 'P'
+
+# define PIXELS 64
+
+typedef struct s_img
+{
+	mlx_image_t	*grass;
+	mlx_image_t	*wall;
+	mlx_image_t	*locked_door;
+	mlx_image_t	*open_door;
+	mlx_image_t	*potion;
+	mlx_image_t	*dino;
+} t_img;
 
 typedef struct s_map
 {
@@ -31,24 +44,44 @@ typedef struct s_map
 	int		n_player;
 	int		exit;
 	int		collect;
-	int		space;
+	int		steps;
 	int		width;
 	int		height;
+	t_img		*img;
+	mlx_t		*mlx;
 	char	**map;
 } t_map;
-
+	
+// Map Validation
 
 void	ft_perror(char *str);
-void	init_layout(t_map *layout);
-void	parse_map(char *map_file, t_map *layout);
-void	map_check(t_map *layout);
-void	shape_check(t_map *layout);
-void	row_check(t_map *layout);
-void	column_check(t_map *layout);
+t_map	*init_layout(char **map);
+t_map	*parse_map(char *map_file);
+void	map_check(t_map *map_data);
+void	shape_check(t_map *map_data);
+void	row_check(t_map *map_data);
+void	column_check(t_map *map_data);
 char	*append_line(char *line, char *map_str);
-void	icon_check(t_map *layout);
-void	icon_find(char c);
-char	**copy_map(char **dup_map, t_map *layout);
-void	ft_floodfill(char **map, t_map *layout, int pos_x, int pos_y);
-void	valid_path(t_map *layout);
+void	icon_check(t_map *map_data);
+void	icon_find(char c, char *icons);
+char	**copy_map(char **dup_map, t_map *map_data);
+void	ft_floodfill(char **map, t_map *map_data, int pos_x, int pos_y);
+void	valid_path(t_map *map_data);
+
+// Images & Textures
+
+t_img	*init_images(mlx_t *mlx);
+t_img	*load_grass(mlx_t *mlx, t_img *png);
+t_img	*load_wall(mlx_t *mlx, t_img *png);
+t_img	*load_exit(mlx_t *mlx, t_img *png);
+t_img	*load_collectable(mlx_t *mlx, t_img *png);
+t_img	*load_player(mlx_t *mlx, t_img *png);
+void	build_map(t_map *game);
+void	add_background(t_map *game);
+void	add_image(t_map *game, size_t x, size_t y);
+
+// Sprite
+
+// Movement & Controls
+
 #endif

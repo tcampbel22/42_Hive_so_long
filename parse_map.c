@@ -31,7 +31,7 @@ void	line_check(char *map_str)
 		ft_perror("Empty line in map");
 }
 
-void	read_map(char *map_file, t_map *layout)
+char	*read_map(char *map_file)
 {
 	int		fd;
 	int		bytes_read;
@@ -45,10 +45,9 @@ void	read_map(char *map_file, t_map *layout)
 	bytes_read = 1;
 	while (bytes_read)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
+		if ((bytes_read = read(fd, buffer, BUFFER_SIZE)) < 0)
 			break ;
-		buffer[bytes_read] = '\0';
+		buffer[bytes_read] = '\0';	
 		if (!map_str)
 		{
 			if (!buffer[0])
@@ -64,25 +63,26 @@ void	read_map(char *map_file, t_map *layout)
 			ft_perror("Malloc Failure");;
 		}
 	}
-	line_check(map_str);
-	layout->map = ft_split(map_str, '\n');
-	ft_free(&map_str);
 	close(fd);
+	return (map_str);
 }
 
-void	parse_map(char *map_file, t_map *layout)
+t_map	*parse_map(char *map_file)
 {
-	int		i;
+	t_map	*map_data; //pointer to struct
+	char	*map_str;
+	char	**map_arr;
 
-	i = 0;
-	layout = malloc(sizeof(t_map));
-	read_map(map_file, layout);
-/*	while (layout->map[i])
+	map_str = read_map(map_file); //reads map and converts it to a single string
+	line_check(map_str); // check for newline errors
+	map_arr = ft_split(map_str, '\n'); // splits the map_str into 2D array
+	map_data = init_layout(map_arr); // initialises struct data 
+	int i = 0;
+ 	while (map_data->map[i])
 	{
-		ft_printf("%s\n", layout->map[i]);
+		ft_printf("%s\n", map_data->map[i]);
 		i++;
-	}*/
-	map_check(layout);
-	ft_free_two(layout->map);
-	free(layout);
+	}
+	map_check(map_data); // checks for all errors in map
+	return (map_data);
 }

@@ -12,49 +12,48 @@
 
 #include "so_long.h"
 
-void	row_check(t_map *layout)
+void	row_check(t_map *map_data)
 {
 	int	y;
 
 	y = 0;
-	while (layout->map[0][y])
+	while (map_data->map[0][y])
 	{
-		if (layout->map[0][y] != WALL)
+		if (map_data->map[0][y] != WALL)
 			ft_perror("Invalid border");
 		y++;
 	}
 	y = 0;
-	while (layout->map[layout->height - 1][y])
+	while (map_data->map[map_data->height - 1][y])
 	{
-		if (layout->map[layout->height - 1][y] != WALL)
+		if (map_data->map[map_data->height - 1][y] != WALL)
 			ft_perror("Invalid border");
 		y++;
 	}
 }
 
-void	column_check(t_map *layout)
+void	column_check(t_map *map_data)
 {
 	int	x;
 
 	x = 0;
-	while (layout->map[x])
+	while (map_data->map[x])
 	{
-		if (layout->map[x][0] != WALL)
+		if (map_data->map[x][0] != WALL)
 			ft_perror("Invalid border");
 		x++;
 	}
 	x = 0;
-	while (layout->map[x])
+	while (map_data->map[x])
 	{
-		if (layout->map[x][layout->width - 1] != WALL)
+		if (map_data->map[x][map_data->width - 1] != WALL)
 			ft_perror("Invalid border");
 		x++;
 	}
 }
 
-void	icon_find(char c)
+void	icon_find(char c, char *icons)
 {
-	char	icons[6] = "CPE10";
 	int	i;
 
 	i = 0;
@@ -68,37 +67,37 @@ void	icon_find(char c)
 }
 
 
-void	icon_count(t_map *layout, char c, int x, int y)
+void	icon_count(t_map *map_data, char c, int x, int y)
 {
-	if (c == 'C')
-		layout->collect++;
-	if (c == 'P')
+	if (c == COLLECT)
+		map_data->collect++;
+	if (c == PLAYER)
 	{
-		layout->pos_x = x;
-		layout->pos_y = y;
-		layout->n_player++;
+		map_data->pos_x = x;
+		map_data->pos_y = y;
+		map_data->n_player++;
 	}
-	if (c == 'E')
-		layout->exit++;
+	if (c == EXIT)
+		map_data->exit++;
 }
 
-void	icon_check(t_map *layout)
+void	icon_check(t_map *map_data)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	while (layout->map[x])
+	while (map_data->map[x])
 	{
 		y = 0;
-		while (layout->map[x][y])
+		while (map_data->map[x][y])
 		{
-			icon_find(layout->map[x][y]);
-			icon_count(layout, layout->map[x][y], x, y);
+			icon_find(map_data->map[x][y], "CPE10");
+			icon_count(map_data, map_data->map[x][y], x, y);
 			y++;
 		}
 		x++;
 	}
-	if (layout->n_player != 1 || layout->collect < 1 || layout->exit != 1)
+	if (map_data->n_player != 1 || map_data->collect < 1 || map_data->exit != 1)
 		ft_perror("Invalid icon amount");
 }

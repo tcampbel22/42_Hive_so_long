@@ -33,20 +33,6 @@ static size_t	count_str(const char *s, char c)
 	return (count);
 }
 
-/*char	**free_str(char **result)
-{
-	size_t	i;
-
-	i = 0;
-	while (result[i])
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
-	return (0);
-}*/
-
 char	**ft_split(char const *s, char c)
 {
 	char	**result;
@@ -70,7 +56,7 @@ char	**ft_split(char const *s, char c)
 			end++;
 		result[i] = ft_substr(s, start, end - start);
 		start = end;
-		if (result[i++] == '\0')
+		if (result[i++] == NULL)
 			return (ft_free_two(result));
 	}
 	return (result);

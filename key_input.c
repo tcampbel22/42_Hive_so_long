@@ -12,22 +12,17 @@
 
 #include "so_long.h"
 
-void	ft_perror(char *str)
-{
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(str, 2);
-	exit(EXIT_FAILURE);
-}
 
-void	name_check(char *map_file)
+void	key_hook(mlx_key_data_t *data, void *param)
 {
-	char	*suffix;
-	
-	if (ft_strlen(map_file) < 5)
-		ft_perror("Invalid file name");
-	suffix = ft_strnstr(map_file, ".ber", ft_strlen(map_file));
-	if (ft_strncmp(suffix, ".ber", ft_strlen(suffix)) != 0)
-		ft_perror("Invalid file type");
+	if (data.key == MLX_KEY_Q || data.key == MLX_KEY_ESCAPE && data.action == MLX_PRESS)
+	{
+		mlx_terminate(game->mlx);
+		ft_free_two(game->map);
+		free(images);
+		free(game);
+		exit(1);
+	}
 }
 
 int	main(int ac, char **av)
@@ -54,6 +49,6 @@ int	main(int ac, char **av)
 	ft_free_two(game->map);
 	free(images);
 	free(game);
-	exit(EXIT_SUCCESS);
+	exit(0);
 }
 

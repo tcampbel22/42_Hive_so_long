@@ -1,54 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   key_input.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/13 17:33:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:38:10 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 
-void	key_hook(mlx_key_data_t *data, void *param)
+void	my_key_hook(mlx_key_data_t keydata, void *param)
 {
-	if (data.key == MLX_KEY_Q || data.key == MLX_KEY_ESCAPE && data.action == MLX_PRESS)
-	{
-		mlx_terminate(game->mlx);
-		ft_free_two(game->map);
-		free(images);
-		free(game);
-		exit(1);
-	}
+	t_map	*game;
+
+	game = param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(game->mlx);
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) &&
+		(keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_up(game);
+	if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) &&
+		(keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_down(game);
+	if ((keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT) &&
+		(keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_right(game);
+	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT) &&
+		(keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_left(game);
 }
-
-int	main(int ac, char **av)
-{
-	t_map			*game;
-	t_img			*images;
-
-	if (ac != 2)
-		ft_perror("Invalid arg amount");
-	name_check(av[1]);
-	game = parse_map(av[1]);
-	mlx_set_setting(MLX_STRETCH_IMAGE, false);
-	game->mlx = mlx_init(game->height * PIXELS, game->width * PIXELS, "so_long", false);
-	if (!game->mlx)
-		ft_perror("MLX Failure");
-	images = init_images(game->mlx);
-	game->img = images;
-	build_map(game);	
-	mlx_set_window_pos(game->mlx, 1000, 50);
-	mlx_keyhook(
-	mlx_loop(game->mlx);
-	mlx_terminate(game->mlx);
-	ft_printf("Great Success");
-	ft_free_two(game->map);
-	free(images);
-	free(game);
-	exit(0);
-}
-

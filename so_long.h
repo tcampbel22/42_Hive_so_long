@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:42:29 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/13 16:41:31 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:10:23 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_map
 	mlx_t		*mlx;
 	char	**map;
 } t_map;
-	
+
 // Map Validation
 
 void	ft_perror(char *str);
@@ -83,5 +83,11 @@ void	add_image(t_map *game, size_t x, size_t y);
 // Sprite
 
 // Movement & Controls
+
+void	my_key_hook(mlx_key_data_t keydata, void *param);
+void	move_up(t_map *game);
+void	move_down(t_map *game);
+void	move_left(t_map *game);
+void	move_right(t_map *game);
 
 #endif

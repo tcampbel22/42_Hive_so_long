@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/13 17:33:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:06:14 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int	main(int ac, char **av)
 	name_check(av[1]);
 	game = parse_map(av[1]);
 	mlx_set_setting(MLX_STRETCH_IMAGE, false);
-	game->mlx = mlx_init(game->height * PIXELS, game->width * PIXELS, "so_long", false);
+	game->mlx = mlx_init(game->width * PIXELS, game->height * PIXELS, "so_long", false);
 	if (!game->mlx)
 		ft_perror("MLX Failure");
 	images = init_images(game->mlx);
 	game->img = images;
-	build_map(game);	
+	build_map(game);
 	mlx_set_window_pos(game->mlx, 1000, 50);
-	mlx_keyhook(
+	mlx_key_hook(game->mlx, &my_key_hook, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
 	ft_printf("Great Success");

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/13 17:33:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:10:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,24 @@ t_img	*load_player(mlx_t *mlx, t_img *png)
 {
 	mlx_texture_t	*player;
 
-	if (!(player = mlx_load_png("./assets/dino_left.png")))
+	if (!(player = mlx_load_png("./assets/dino_right_2.png")))
 		ft_perror("Texture failed to load");
 	if (!(png->dino = mlx_texture_to_image(mlx, player)))
 		ft_perror("Image failed to load");
-	mlx_resize_image(png->dino, PIXELS + 10, PIXELS);
+	mlx_resize_image(png->dino, PIXELS, PIXELS);
 	mlx_delete_texture(player);
 	return (png);
 }
+/*
+t_img	*load_player(mlx_t *mlx, t_img *png)
+{
+	mlx_texture_t	*player;
+
+	if (!(player = mlx_load_png("./assets/dino_right_4.png")))
+		ft_perror("Texture failed to load");
+	if (!(png->dino = mlx_texture_to_image(mlx, player)))
+		ft_perror("Image failed to load");
+	mlx_resize_image(png->dino, PIXELS, PIXELS);
+	mlx_delete_texture(player);
+	return (png);
+}*/

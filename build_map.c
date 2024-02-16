@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/13 17:33:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:03:46 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 void	add_image(t_map *game, size_t x, size_t y)
 {
-	if (game->map[x][y] == WALL)
+	if (game->map[y][x] == WALL)
 		mlx_image_to_window(game->mlx, game->img->wall, x * PIXELS , y * PIXELS);
-	if (game->map[x][y] == EXIT)
+	if (game->map[y][x] == EXIT)
 		mlx_image_to_window(game->mlx, game->img->locked_door, x * PIXELS , y * PIXELS);
-	if (game->map[x][y] == COLLECT)
+	if (game->map[y][x] == COLLECT)
 		mlx_image_to_window(game->mlx, game->img->potion, x * PIXELS , y * PIXELS);
-	if (game->map[x][y] == PLAYER)
+	if (game->map[y][x] == PLAYER)
 		mlx_image_to_window(game->mlx, game->img->dino, x * PIXELS , y * PIXELS);
 
 }
@@ -32,16 +32,16 @@ void	add_background(t_map *game)
 	size_t	x;
 	size_t	y;
 	
-	x = 0;
-	while (game->map[x])
+	y = 0;
+	while (game->map[y])
 	{
-		y = 0;
-		while (game->map[x][y])
+		x = 0;
+		while (game->map[y][x])
 		{
 			mlx_image_to_window(game->mlx, game->img->grass, x * PIXELS , y * PIXELS);
-			y++;
-		}
 		x++;
+		}
+		y++;
 	}
 }
 
@@ -51,17 +51,17 @@ void	build_map(t_map *game)
 	size_t	x;
 	size_t	y;
 	
-	x = 0;
+	y = 0;
 	add_background(game);
-	while (game->map[x])
+	while (game->map[y])
 	{
-		y = 0;
-		while (game->map[x][y])
+		x = 0;
+		while (game->map[y][x])
 		{
 			add_image(game, x, y);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 

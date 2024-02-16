@@ -28,8 +28,9 @@ endif
 
 #---------------------------------Source Files--------------------------------#
 
-SRC_FLS 		= 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c $(SRC_DIR)/valid_path.c\
-					$(SRC_DIR)/map_check_two.c $(SRC_DIR)/load_images.c $(SRC_DIR)/build_map.c
+SRC_FLS 		= 	$(SRC_DIR)/so_long.c $(SRC_DIR)/parse_map.c $(SRC_DIR)/check_map.c $(SRC_DIR)/valid_path.c \
+					$(SRC_DIR)/map_check_two.c $(SRC_DIR)/load_images.c $(SRC_DIR)/build_map.c $(SRC_DIR)/key_input.c $(SRC_DIR)/move_player.c
+
 #---------------------------------Object Files--------------------------------#
 
 OBJS 			= $(patsubst $(SRC_DIR/)%.c, $(OBJ_DIR)/%.o, $(SRC_FLS))

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:06:51 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/16 15:13:58 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:31:00 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ t_map	*init_layout(char **map)
 	layout->n_player = 0;
 	layout->exit = 0;
 	layout->collect = 0;
-	layout->steps = 0;
+	layout->f_collect = 0;
+	layout->steps = 1;
 	layout->width = 0;
 	layout->height = 0;
 	return (layout);

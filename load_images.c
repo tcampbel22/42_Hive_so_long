@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/16 17:10:59 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:59:22 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ t_img	*init_images(mlx_t *mlx)
 	png = load_grass(mlx, png);
 	png = load_wall(mlx, png);
 	png = load_exit(mlx, png);
+	png = load_open_exit(mlx, png);
 	png = load_collectable(mlx, png);
-	png = load_player(mlx, png);
+	png = load_player_right(mlx, png);
+	png = load_player_left(mlx, png);
 	return (png);
 }
 
@@ -66,6 +68,19 @@ t_img	*load_exit(mlx_t *mlx, t_img *png)
 	return (png);
 }
 
+t_img	*load_open_exit(mlx_t *mlx, t_img *png)
+{
+	mlx_texture_t	*open_door;
+
+	if (!(open_door = mlx_load_png("./assets/door_fullyopen.png")))
+		ft_perror("Texture failed to load");
+	if (!(png->open_door = mlx_texture_to_image(mlx, open_door)))
+		ft_perror("Image failed to load");
+	mlx_resize_image(png->open_door, PIXELS, PIXELS);
+	mlx_delete_texture(open_door);
+	return (png);
+}
+
 t_img	*load_collectable(mlx_t *mlx, t_img *png)
 {
 	mlx_texture_t	*potion;
@@ -79,28 +94,40 @@ t_img	*load_collectable(mlx_t *mlx, t_img *png)
 	return (png);
 }
 
-t_img	*load_player(mlx_t *mlx, t_img *png)
+t_img	*load_player_right(mlx_t *mlx, t_img *png)
 {
 	mlx_texture_t	*player;
 
-	if (!(player = mlx_load_png("./assets/dino_right_2.png")))
+	if (!(player = mlx_load_png("./assets/dino_right_3.png")))
 		ft_perror("Texture failed to load");
-	if (!(png->dino = mlx_texture_to_image(mlx, player)))
+	if (!(png->right[0] = mlx_texture_to_image(mlx, player)))
 		ft_perror("Image failed to load");
-	mlx_resize_image(png->dino, PIXELS, PIXELS);
+	mlx_resize_image(png->right[0], PIXELS, PIXELS);
 	mlx_delete_texture(player);
 	return (png);
 }
-/*
-t_img	*load_player(mlx_t *mlx, t_img *png)
+
+t_img	*load_player_left(mlx_t *mlx, t_img *png)
+{
+	mlx_texture_t	*player;
+
+	if (!(player = mlx_load_png("./assets/dino_left_1.png")))
+		ft_perror("Texture failed to load");
+	if (!(png->left[0] = mlx_texture_to_image(mlx, player)))
+		ft_perror("Image failed to load");
+	mlx_resize_image(png->left[0], PIXELS, PIXELS);
+	mlx_delete_texture(player);
+	return (png);
+}
+/*t_img	*load_player_left(mlx_t *mlx, t_img *png)
 {
 	mlx_texture_t	*player;
 
 	if (!(player = mlx_load_png("./assets/dino_right_4.png")))
 		ft_perror("Texture failed to load");
-	if (!(png->dino = mlx_texture_to_image(mlx, player)))
+	if (!(png->left[1] = mlx_texture_to_image(mlx, player)))
 		ft_perror("Image failed to load");
-	mlx_resize_image(png->dino, PIXELS, PIXELS);
+	mlx_resize_image(png->left[1], PIXELS, PIXELS);
 	mlx_delete_texture(player);
 	return (png);
 }*/

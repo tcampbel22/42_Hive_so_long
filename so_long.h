@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:42:29 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/16 15:10:23 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:59:55 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,21 @@ typedef struct s_img
 	mlx_image_t	*locked_door;
 	mlx_image_t	*open_door;
 	mlx_image_t	*potion;
-	mlx_image_t	*dino;
+	mlx_image_t	*left[3];
+	mlx_image_t	*right[3];
 } t_img;
 
 typedef struct s_map
 {
-	int		pos_x;
-	int		pos_y;
-	int		n_player;
-	int		exit;
-	int		collect;
-	int		steps;
-	int		width;
-	int		height;
+	int			pos_x;
+	int			pos_y;
+	int			n_player;
+	int			exit;
+	int			collect;
+	int			f_collect;
+	int			steps;
+	int			width;
+	int			height;
 	t_img		*img;
 	mlx_t		*mlx;
 	char	**map;
@@ -74,8 +76,10 @@ t_img	*init_images(mlx_t *mlx);
 t_img	*load_grass(mlx_t *mlx, t_img *png);
 t_img	*load_wall(mlx_t *mlx, t_img *png);
 t_img	*load_exit(mlx_t *mlx, t_img *png);
+t_img	*load_open_exit(mlx_t *mlx, t_img *png);
 t_img	*load_collectable(mlx_t *mlx, t_img *png);
-t_img	*load_player(mlx_t *mlx, t_img *png);
+t_img	*load_player_right(mlx_t *mlx, t_img *png);
+t_img	*load_player_left(mlx_t *mlx, t_img *png);
 void	build_map(t_map *game);
 void	add_background(t_map *game);
 void	add_image(t_map *game, size_t x, size_t y);
@@ -89,5 +93,6 @@ void	move_up(t_map *game);
 void	move_down(t_map *game);
 void	move_left(t_map *game);
 void	move_right(t_map *game);
+void	collect_find(t_map *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 15:34:56 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/16 15:40:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:31:55 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	icon_check(t_map *map_data)
 		}
 		x++;
 	}
+	map_data->f_collect = map_data->collect;
 	if (map_data->n_player != 1 || map_data->collect < 1 || map_data->exit != 1)
 		ft_perror("Invalid icon amount");
 }

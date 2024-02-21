@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:42:29 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/20 15:59:55 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:38:03 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,17 @@
 # define EXIT 'E'
 # define PLAYER 'P'
 
-# define PIXELS 64
+# define PIX 64
 
 typedef struct s_img
 {
 	mlx_image_t	*grass;
 	mlx_image_t	*wall;
-	mlx_image_t	*locked_door;
+	mlx_image_t	*lock_door;
 	mlx_image_t	*open_door;
 	mlx_image_t	*potion;
-	mlx_image_t	*left[3];
-	mlx_image_t	*right[3];
-} t_img;
+	mlx_image_t	*player;
+}	t_img;
 
 typedef struct s_map
 {
@@ -51,8 +50,8 @@ typedef struct s_map
 	int			height;
 	t_img		*img;
 	mlx_t		*mlx;
-	char	**map;
-} t_map;
+	char		**map;
+}	t_map;
 
 // Map Validation
 
@@ -69,6 +68,7 @@ void	icon_find(char c, char *icons);
 char	**copy_map(char **dup_map, t_map *map_data);
 void	ft_floodfill(char **map, t_map *map_data, int pos_x, int pos_y);
 void	valid_path(t_map *map_data);
+char	*create_string(char *map_str, char *buffer, int bytes_read, int fd);
 
 // Images & Textures
 
@@ -78,11 +78,10 @@ t_img	*load_wall(mlx_t *mlx, t_img *png);
 t_img	*load_exit(mlx_t *mlx, t_img *png);
 t_img	*load_open_exit(mlx_t *mlx, t_img *png);
 t_img	*load_collectable(mlx_t *mlx, t_img *png);
-t_img	*load_player_right(mlx_t *mlx, t_img *png);
-t_img	*load_player_left(mlx_t *mlx, t_img *png);
+t_img	*load_player(mlx_t *mlx, t_img *png);
 void	build_map(t_map *game);
 void	add_background(t_map *game);
-void	add_image(t_map *game, size_t x, size_t y);
+void	add_image(t_map *game, int x, int y);
 
 // Sprite
 
@@ -94,5 +93,7 @@ void	move_down(t_map *game);
 void	move_left(t_map *game);
 void	move_right(t_map *game);
 void	collect_find(t_map *game);
+void	end_game(t_map *game);
+void	open_exit(t_map *game);
 
 #endif

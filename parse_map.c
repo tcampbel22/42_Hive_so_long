@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:39:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/19 15:15:27 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:35:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,46 @@ char	*read_map(char *map_file)
 	bytes_read = 1;
 	while (bytes_read)
 	{
-		if ((bytes_read = read(fd, buffer, BUFFER_SIZE)) < 0)
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
 			break ;
-		buffer[bytes_read] = '\0';	
-		if (!map_str)
-		{
-			if (!buffer[0])
-				ft_perror("Map is empty");
-			map_str = ft_strdup(buffer);
-		}
-		else if (map_str || bytes_read)
-			map_str = append_line(buffer, map_str);
-		if (!map_str)
-		{
-			ft_free(&map_str);
-			close(fd);
-			ft_perror("Malloc Failure");;
-		}
+		buffer[bytes_read] = '\0';
+		map_str = create_string(map_str, buffer, bytes_read, fd);
 	}
 	close(fd);
 	return (map_str);
 }
 
+char	*create_string(char *map_str, char *buffer, int bytes_read, int fd)
+{
+	if (!map_str)
+	{
+		if (!buffer[0])
+			ft_perror("Map is empty");
+		map_str = ft_strdup(buffer);
+	}
+	else if (map_str || bytes_read)
+		map_str = append_line(buffer, map_str);
+	if (!map_str)
+	{
+		ft_free(&map_str);
+		close(fd);
+		ft_perror("Malloc Failure");
+	}
+	return (map_str);
+}
+
 t_map	*parse_map(char *map_file)
 {
-	t_map	*map_data; //pointer to struct
+	t_map	*map_data;
 	char	*map_str;
 	char	**map_arr;
 
-	map_str = read_map(map_file); //reads map and converts it to a single string
-	line_check(map_str); // check for newline errors
-	map_arr = ft_split(map_str, '\n'); // splits the map_str into 2D array
-	map_data = init_layout(map_arr); // initialises struct data 
-	int i = 0;
- 	while (map_data->map[i])
-	{
-		ft_printf("%s\n", map_data->map[i]);
-		i++;
-	}
-	map_check(map_data); // checks for all errors in map
+	map_str = read_map(map_file);
+	line_check(map_str);
+	map_arr = ft_split(map_str, '\n');
+	map_data = init_layout(map_arr);
+	map_check(map_data);
+	ft_free(&map_str);
 	return (map_data);
 }

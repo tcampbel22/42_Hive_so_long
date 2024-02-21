@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:32:01 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/20 15:27:20 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:39:51 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_floodfill(char **map, t_map *map_data, int pos_x, int pos_y)
 
 void	valid_path(t_map *map_data)
 {
-	char **dup_map;
+	char	**dup_map;
 
 	dup_map = NULL;
 	dup_map = copy_map(dup_map, map_data);

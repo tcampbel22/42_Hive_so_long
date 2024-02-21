@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 15:34:56 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/20 15:31:55 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:21:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	icon_find(char c, char *icons)
 	}
 	ft_perror("Invalid icon on map");
 }
-
 
 void	icon_count(t_map *map_data, char c, int x, int y)
 {

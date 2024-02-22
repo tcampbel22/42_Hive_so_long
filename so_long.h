@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:42:29 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/21 15:38:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:27:05 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ typedef struct s_map
 	char		**map;
 }	t_map;
 
-// Map Validation
-
 void	ft_perror(char *str);
 t_map	*init_layout(char **map);
 t_map	*parse_map(char *map_file);
@@ -70,22 +68,16 @@ void	ft_floodfill(char **map, t_map *map_data, int pos_x, int pos_y);
 void	valid_path(t_map *map_data);
 char	*create_string(char *map_str, char *buffer, int bytes_read, int fd);
 
-// Images & Textures
-
-t_img	*init_images(mlx_t *mlx);
-t_img	*load_grass(mlx_t *mlx, t_img *png);
-t_img	*load_wall(mlx_t *mlx, t_img *png);
-t_img	*load_exit(mlx_t *mlx, t_img *png);
-t_img	*load_open_exit(mlx_t *mlx, t_img *png);
-t_img	*load_collectable(mlx_t *mlx, t_img *png);
-t_img	*load_player(mlx_t *mlx, t_img *png);
+t_img	*init_images(t_map *game);
+t_img	*load_grass(t_map *game, t_img *png);
+t_img	*load_wall(t_map *game, t_img *png);
+t_img	*load_exit(t_map *game, t_img *png);
+t_img	*load_open_exit(t_map *game, t_img *png);
+t_img	*load_collectable(t_map *game, t_img *png);
+t_img	*load_player(t_map *game, t_img *png);
 void	build_map(t_map *game);
 void	add_background(t_map *game);
 void	add_image(t_map *game, int x, int y);
-
-// Sprite
-
-// Movement & Controls
 
 void	my_key_hook(mlx_key_data_t keydata, void *param);
 void	move_up(t_map *game);
@@ -95,5 +87,7 @@ void	move_right(t_map *game);
 void	collect_find(t_map *game);
 void	end_game(t_map *game);
 void	open_exit(t_map *game);
+
+void	kill_mlx(t_map *game);
 
 #endif

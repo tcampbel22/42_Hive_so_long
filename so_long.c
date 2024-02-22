@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/21 15:48:58 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:13:39 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@ void	ft_perror(char *str)
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(str, 2);
 	exit(EXIT_FAILURE);
+}
+
+void	kill_mlx(t_map *game)
+{
+	if (game->map)
+		ft_free_two(game->map);
+//	if (game->images)
+//		free(game->images);
+	mlx_terminate(game->mlx);
+	if (game)
+		free(game);
 }
 
 void	name_check(char *map_file)
@@ -43,7 +54,9 @@ int	main(int ac, char **av)
 	game->mlx = mlx_init(game->width * PIX, game->height * PIX, "DINO", false);
 	if (!game->mlx)
 		ft_perror("MLX Failure");
-	images = init_images(game->mlx);
+	images = init_images(game);
+	if (!images)
+		ft_perror("Images failed to load");
 	game->img = images;
 	build_map(game);
 	mlx_set_window_pos(game->mlx, 1000, 50);

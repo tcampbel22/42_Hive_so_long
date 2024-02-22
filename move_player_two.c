@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:17:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/21 15:34:42 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:46:19 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	end_game(t_map *game)
 void	collect_find(t_map *game)
 {
 	int	i;
-	int	c;
 
 	i = 0;
-	c = game->f_collect;
-	while (i <= c)
+	while (i <= game->f_collect)
 	{
 		if (game->pos_y == game->img->potion->instances[i].x / PIX
 			&& game->pos_x == game->img->potion->instances[i].y / PIX)
@@ -47,6 +45,6 @@ void	collect_find(t_map *game)
 		}
 		i++;
 	}
-	if (c == game->collect)
+	if (game->f_collect == game->collect)
 		open_exit(game);
 }

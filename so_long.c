@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/22 12:13:39 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/23 10:45:37 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	kill_mlx(t_map *game)
 {
 	if (game->map)
 		ft_free_two(game->map);
-//	if (game->images)
-//		free(game->images);
-	mlx_terminate(game->mlx);
+	if (game->img)
+		free(game->img);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
 	if (game)
 		free(game);
 }
@@ -53,7 +54,10 @@ int	main(int ac, char **av)
 	mlx_set_setting(MLX_STRETCH_IMAGE, false);
 	game->mlx = mlx_init(game->width * PIX, game->height * PIX, "DINO", false);
 	if (!game->mlx)
+	{
+		kill_mlx(game);
 		ft_perror("MLX Failure");
+	}
 	images = init_images(game);
 	if (!images)
 		ft_perror("Images failed to load");
@@ -62,9 +66,6 @@ int	main(int ac, char **av)
 	mlx_set_window_pos(game->mlx, 1000, 50);
 	mlx_key_hook(game->mlx, &my_key_hook, game);
 	mlx_loop(game->mlx);
-	mlx_terminate(game->mlx);
-	ft_free_two(game->map);
-	free(images);
-	free(game);
+	kill_mlx(game);
 	exit(EXIT_SUCCESS);
 }

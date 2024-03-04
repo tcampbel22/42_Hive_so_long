@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:04:35 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/02/22 12:30:54 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/02/23 10:34:48 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ t_img	*init_images(t_map *game)
 
 	png = malloc(sizeof(t_img));
 	if (!png)
+	{
+		kill_mlx(game);
 		ft_perror("Malloc Failure");
+	}
 	png = load_grass(game, png);
 	png = load_wall(game, png);
 	png = load_exit(game, png);
@@ -65,7 +68,7 @@ t_img	*load_wall(t_map *game, t_img *png)
 		kill_mlx(game);
 		ft_perror("Image failed to load");
 	}
-		mlx_resize_image(png->wall, PIX, PIX);
+	mlx_resize_image(png->wall, PIX, PIX);
 	mlx_delete_texture(wall);
 	return (png);
 }

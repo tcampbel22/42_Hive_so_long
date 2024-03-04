@@ -45,7 +45,7 @@ PURPLE			= \033[1;35m
 END				= \033[0m
 
 #---------------------------------Rules---------------------------------------#
-all: libmlx $(LIBFTNAME) $(NAME)
+all: $(LIBFTNAME) libmlx $(NAME)
 
 libmlx:
 	@if [ ! -d $(MLX_DIR)/build ]; then\
@@ -56,12 +56,12 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o:  $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) -g $(CFLAGS) $(MLX_HEAD) -c $< -o $@
+	$(CC) -g -c $< -o $@
 
-$(LIBFTNAME): 
+$(LIBFTNAME):
 	@make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS) 
+$(NAME): $(OBJS)
 
 	@echo "${YELLOW}|------------------------>${PURPLE}Compiling so_long${YELLOW}<--------------------|${END}"
 
